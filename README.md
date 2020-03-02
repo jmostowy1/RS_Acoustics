@@ -1,2 +1,2 @@
 # RS_Acoustics
-Data processing utility functions
+Data processing utility scripts
