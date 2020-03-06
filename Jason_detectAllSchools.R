@@ -146,3 +146,4 @@ for(i in 1:nrow(ev.repo)){
   print(i)
 }
 
+write_csv(ev.school.report, path = './reports/ev_school_report.csv')

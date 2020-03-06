@@ -80,9 +80,12 @@ ev.restart = function(ev.object){
 }
 
 #EV utility: List all region names, ID and classes for a given EV file
-EVListAllRegionNames = function(EV.file){
+EVListAllRegionNames = function(EV.File){
   regions = EV.File[["Regions"]]
   cnt = regions[["Count"]]
+  if(cnt == 0){
+    return(NULL)
+  }
   output = tibble(reg_name = NA, reg_id = NA, class = NA, .rows = cnt)
   for(ind in 0:(cnt-1)){
     output$reg_name[ind+1] = regions$Item(ind)[["Name"]]
@@ -96,6 +99,9 @@ EVListAllRegionNames = function(EV.file){
 EVRegionCountbyClass = function(EV.file, region.class.name){
   region.class.name = tolower(region.class.name)
   intermed = EVListAllRegionNames(EV.file)
+  if(is.null(intermed)){
+    return(0)
+  }
   intermed$class = tolower(intermed$class)
   outp = sum(intermed$class == region.class.name)
   return(outp)
@@ -108,5 +114,28 @@ EVSetExportVariables = function(EV.file, export.variable.list){
     cur.item = export.variable.list[item+1]
     cur.item.pointer = exp.vars$Item(cur.item)
     cur.item.pointer[["Enabled"]] = TRUE
+  }
+}
+
+#Request is essentially a request to enter a specific keyword to continue. It repeats its request until the keyword (case-insensitive) is input, at which time it returns TRUE
+request = function(prompt, keyword){
+  full.prompt = paste0(prompt, ";\n", "Type ", keyword, " to continue." )
+  req = readline(prompt = full.prompt)
+  
+  req.lower = tolower(req)
+  keyword.lower = tolower(keyword)
+  
+  if(req.lower == keyword.lower){
+    return(TRUE)
+  } else{
+    request(prompt, keyword)
+  }
+}
+
+#Backup metadata: Requests that user enters a keyword, then backs up the metadata. Otherwise it will not proceed
+metadata_backup = function(metadata.object, local.backup.location = local.EVMetadata.backup.loc, keyword = 'Proceed'){
+  req1 = request("This function will overwrite the metadata backup.\nPress [Esc] to cancel", keyword = keyword)
+  if(req1 == TRUE){
+    write_csv(metadata.object, local.backup.location)
   }
 }
