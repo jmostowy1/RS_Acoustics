@@ -109,7 +109,7 @@ EVRegionCountbyClass = function(EV.file, region.class.name){
 
 #EV Utility: Set all export variables for a file. Takes an EV file and a vector of export variables to be set to ENABLED
 EVSetExportVariables = function(EV.file, export.variable.list){
-  exp.vars = EV.File[["Properties"]][["Export"]][["Variables"]]
+  exp.vars = EV.file[["Properties"]][["Export"]][["Variables"]]
   for(item in 0:(length(export.variable.list)-1)){
     cur.item = export.variable.list[item+1]
     cur.item.pointer = exp.vars$Item(cur.item)

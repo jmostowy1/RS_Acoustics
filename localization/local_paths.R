@@ -9,3 +9,5 @@ local.EVMetadata.loc = "G:\\My Drive\\School\\Thesis\\Data_Analysis\\Acoustic_An
 #Local export root path. This is a path to the highest level in my export folder. Basically, data that I export from echoview lives here, or in a subfolder in here. I have subfolders within this folder, so to actually export something to the proper folder I combine this with a subfolder name
 local.export.root = "G:\\My Drive\\School\\Thesis\\Data_Analysis\\Acoustic_Analysis\\EV_exports"
 
+#Local metadata backup: A backup location for metadata
+local.EVMetadata.backup.loc = "G:\\My Drive\\School\\Thesis\\Data_Analysis\\Acoustic_Analysis\\EV_file_metadata\\ev_file_metadata_backup.csv"
